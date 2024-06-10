@@ -15,7 +15,7 @@ public class BookController {
     private BookService bookService;
 
     public BookController() {
-        this.bookService = BookServiceFactory.getBookService();
+        this.bookService = BookServiceFactory.getService();
     }
 
     @GetMapping("{id}")

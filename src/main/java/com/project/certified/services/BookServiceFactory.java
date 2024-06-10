@@ -9,7 +9,7 @@ public class BookServiceFactory {
     @Value("${database.type}")
     static String database = "postgresql";
 
-    public static BookService getBookService() {
+    public static BookService getService() {
         if (database.equals("mongo")) {
             return new BookServiceMongo();
         } else if (database.equals("postgresql")) {
