@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.Set;
 
 @Setter
 @Getter
@@ -22,8 +21,6 @@ public class UserDto {
     private String lastName;
 
     private String email;
-
-    private Set<LoanDto> loans;
 
     private LocalDateTime createdAt;
 

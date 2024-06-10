@@ -1,6 +1,7 @@
 package com.project.certified.controller;
 
 import com.project.certified.dto.BookDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.project.certified.services.BookService;
@@ -14,8 +15,9 @@ public class BookController {
 
     private BookService bookService;
 
-    public BookController() {
-        this.bookService = BookServiceFactory.getService();
+    @Autowired
+    public BookController(BookServiceFactory bookServiceFactory) {
+        this.bookService = bookServiceFactory.getService();
     }
 
     @GetMapping("{id}")

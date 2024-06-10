@@ -11,7 +11,7 @@ public interface BookMapper {
 
     BookDto toDto(com.project.certified.entity.Mongo.BookEntity entity);
 
-    BookEntity toEntity(BookDto dto);
+    BookEntity toEntityPostgre(BookDto dto);
 
     com.project.certified.entity.Mongo.BookEntity toEntityMongo(BookDto dto);
 

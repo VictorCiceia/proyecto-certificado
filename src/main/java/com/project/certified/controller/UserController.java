@@ -3,6 +3,7 @@ package com.project.certified.controller;
 import com.project.certified.dto.UserDto;
 import com.project.certified.services.UserService;
 import com.project.certified.services.UserServiceFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,8 +15,9 @@ public class UserController {
 
     private UserService userService;
 
-    public UserController() {
-        this.userService = UserServiceFactory.getService();
+    @Autowired
+    public UserController(UserServiceFactory authServiceFactory) {
+        this.userService = authServiceFactory.getService();
     }
 
     @GetMapping("{id}")
@@ -26,11 +28,6 @@ public class UserController {
     @GetMapping
     public ResponseEntity<List<UserDto>> findAll() {
         return ResponseEntity.ok(this.userService.findAll());
-    }
-
-    @PostMapping
-    public ResponseEntity<UserDto> save(@RequestBody final UserDto userDto) {
-        return ResponseEntity.ok().body(this.userService.save(userDto));
     }
 
     @PutMapping("{id}")

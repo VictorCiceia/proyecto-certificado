@@ -3,6 +3,7 @@ package com.project.certified.controller;
 import com.project.certified.dto.LoanDto;
 import com.project.certified.services.LoanService;
 import com.project.certified.services.LoanServiceFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,8 +15,9 @@ public class LoanController {
 
     private LoanService loanService;
 
-    public LoanController() {
-        this.loanService = LoanServiceFactory.getService();
+    @Autowired
+    public LoanController(LoanServiceFactory authServiceFactory) {
+        this.loanService = authServiceFactory.getService();
     }
 
     @GetMapping("{id}")

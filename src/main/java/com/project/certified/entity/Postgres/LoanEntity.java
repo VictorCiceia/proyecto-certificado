@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 public class LoanEntity {
 
     @Id
+    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -33,6 +34,7 @@ public class LoanEntity {
 
     @CreationTimestamp
     private LocalDate loanDate;
+
     @UpdateTimestamp
     private LocalDate returnDate;
 

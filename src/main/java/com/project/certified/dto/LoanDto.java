@@ -1,7 +1,5 @@
 package com.project.certified.dto;
 
-import com.project.certified.entity.Mongo.BookEntity;
-import com.project.certified.entity.Mongo.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,11 +14,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class LoanDto {
 
-    private String id;
+    private Long id;
 
-    private BookEntity book;
+    private BookDto book;
 
-    private UserEntity user;
+    private UserDto user;
 
     private LocalDate loanDate;
 

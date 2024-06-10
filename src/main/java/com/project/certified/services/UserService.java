@@ -10,8 +10,6 @@ public interface UserService {
 
     UserDto findById(String id);
 
-    UserDto save(UserDto userDto);
-
     UserDto update(UserDto userDto, String id);
 
     void deleteById(String id);
