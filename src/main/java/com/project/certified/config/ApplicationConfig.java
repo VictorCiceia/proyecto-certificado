@@ -5,7 +5,6 @@ import com.project.certified.repository.Mongo.UserRepositoryMongo;
 import com.project.certified.repository.Postgres.UserRepositoryPostgres;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,9 +19,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @RequiredArgsConstructor
 public class ApplicationConfig {
-
-    @Value("${database.type}")
-    static String database = "postgresql";
 
     @Autowired
     private final UserRepositoryPostgres userRepositoryPostgres;
@@ -50,7 +46,8 @@ public class ApplicationConfig {
 
     @Bean
     public UserDetailsService userDetailService() {
-        if (database.equals("mongo")) {
+        final DataBase dataBase = DataBase.getInstance();
+        if (dataBase.getDatabase().equals(DataBase.MONGO)) {
             return username -> this.userRepositoryMongo.findByEmail(username)
                     .orElseThrow(() -> new UsernameNotFoundException("User not fournd"));
         } else {

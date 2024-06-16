@@ -1,17 +1,14 @@
 package com.project.certified.services;
 
+import com.project.certified.config.DataBase;
 import com.project.certified.services.Mongo.UserServiceMongo;
 import com.project.certified.services.Postgres.UserServicePostgres;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UserServiceFactory {
-
-    @Value("${database.type}")
-    static String database = "postgresql";
 
     private static ApplicationContext applicationContext;
 
@@ -21,7 +18,8 @@ public class UserServiceFactory {
     }
 
     public static UserService getService() {
-        if ("mongo".equals(database)) {
+        final DataBase dataBase = DataBase.getInstance();
+        if (DataBase.MONGO.equals(dataBase.getDatabase())) {
             return applicationContext.getBean(UserServiceMongo.class);
         } else {
             return applicationContext.getBean(UserServicePostgres.class);
