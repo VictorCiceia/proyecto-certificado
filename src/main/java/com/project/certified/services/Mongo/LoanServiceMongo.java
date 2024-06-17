@@ -36,6 +36,16 @@ public class LoanServiceMongo implements LoanService {
     }
 
     @Override
+    public List<LoanDto> findAllByBook(String idBook) {
+        return List.of();
+    }
+
+    @Override
+    public List<LoanDto> findAllByUser(String idUser) {
+        return List.of();
+    }
+
+    @Override
     public LoanDto save(LoanDto loanDto) {
         final LoanEntity loan = mapper.toEntityMongo(loanDto);
         final LoanEntity savedLoan = loanRepository.save(loan);

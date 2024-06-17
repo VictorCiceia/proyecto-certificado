@@ -9,8 +9,10 @@ import org.mapstruct.Mapping;
 public interface UserMapper {
 
 
+    @Mapping(target = "password", ignore = true)
     UserDto toDto(UserEntity entity);
 
+    @Mapping(target = "password", ignore = true)
     UserDto toDto(com.project.certified.entity.Mongo.UserEntity entity);
 
     @Mapping(target = "id", ignore = true)

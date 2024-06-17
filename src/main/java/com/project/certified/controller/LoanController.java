@@ -30,6 +30,16 @@ public class LoanController {
         return ResponseEntity.ok(this.loanService.findAll());
     }
 
+    @GetMapping("/book/{id}")
+    public ResponseEntity<List<LoanDto>> findAllByBook(@PathVariable("id") final String id) {
+        return ResponseEntity.ok(this.loanService.findAllByBook(id));
+    }
+
+    @GetMapping("/user/{id}")
+    public ResponseEntity<List<LoanDto>> findAllByUser(@PathVariable("id") final String id) {
+        return ResponseEntity.ok(this.loanService.findAllByUser(id));
+    }
+
     @PostMapping
     public ResponseEntity<LoanDto> save(@RequestBody final LoanDto loanDto) {
         return ResponseEntity.ok().body(this.loanService.save(loanDto));

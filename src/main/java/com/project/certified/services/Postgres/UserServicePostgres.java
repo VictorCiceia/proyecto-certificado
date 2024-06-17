@@ -1,8 +1,12 @@
 package com.project.certified.services.Postgres;
 
 import com.project.certified.dto.UserDto;
+import com.project.certified.entity.Postgres.BookEntity;
+import com.project.certified.entity.Postgres.LoanEntity;
 import com.project.certified.entity.Postgres.UserEntity;
 import com.project.certified.exception.ResourceNotFoundException;
+import com.project.certified.repository.Postgres.BookRepositoryPostgres;
+import com.project.certified.repository.Postgres.LoanRepositoryPostgres;
 import com.project.certified.repository.Postgres.UserRepositoryPostgres;
 import com.project.certified.services.UserService;
 import com.project.certified.services.mapper.UserMapper;
@@ -21,6 +25,12 @@ public class UserServicePostgres implements UserService {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private LoanRepositoryPostgres loanRepository;
+
+    @Autowired
+    private BookRepositoryPostgres bookRepositoryPostgres;
+
     @Override
     public List<UserDto> findAll() {
         return userRepositoryPostgres.findAll().stream()
@@ -36,7 +46,7 @@ public class UserServicePostgres implements UserService {
     }
 
     @Override
-    public UserDto update(final UserDto userDto, String id) {
+    public UserDto update(final UserDto userDto, final String id) {
         UserEntity user = userRepositoryPostgres.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
         user.setName(userDto.getName());
@@ -48,9 +58,19 @@ public class UserServicePostgres implements UserService {
 
     @Override
     public void deleteById(final String id) {
-        if (!userRepositoryPostgres.existsById(id)) {
-            throw new ResourceNotFoundException("User", "id", id);
+        final UserEntity user = userRepositoryPostgres.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
+
+        // Borrando todos sus prestamos
+        final List<LoanEntity> loans = loanRepository.findAllByUserId(user.getId());
+        for (LoanEntity loan : loans) {
+            loanRepository.deleteById(loan.getId());
+            //Actualiza el estado del libro
+            final BookEntity bookEntity = bookRepositoryPostgres.findById(loan.getBook().getId())
+                    .orElseThrow(() -> new ResourceNotFoundException("Book", "id", loan.getBook().getId()));
+            bookEntity.setReserved(false);
+            bookRepositoryPostgres.save(bookEntity);
         }
-        userRepositoryPostgres.deleteById(id);
+        userRepositoryPostgres.delete(user);
     }
 }

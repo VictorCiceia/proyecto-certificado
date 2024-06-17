@@ -14,11 +14,13 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class LoanDto {
 
-    private Long id;
+    private String id;
 
     private BookDto book;
 
     private UserDto user;
+
+    private Boolean delivered;
 
     private LocalDate loanDate;
 

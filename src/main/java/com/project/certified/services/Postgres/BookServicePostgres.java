@@ -2,8 +2,10 @@ package com.project.certified.services.Postgres;
 
 import com.project.certified.dto.BookDto;
 import com.project.certified.entity.Postgres.BookEntity;
+import com.project.certified.entity.Postgres.LoanEntity;
 import com.project.certified.exception.ResourceNotFoundException;
 import com.project.certified.repository.Postgres.BookRepositoryPostgres;
+import com.project.certified.repository.Postgres.LoanRepositoryPostgres;
 import com.project.certified.services.BookService;
 import com.project.certified.services.mapper.BookMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ public class BookServicePostgres implements BookService {
 
     @Autowired
     private BookMapper mapper;
+
+    @Autowired
+    private LoanRepositoryPostgres loanRepository;
 
     @Override
     public List<BookDto> findAll() {
@@ -39,6 +44,7 @@ public class BookServicePostgres implements BookService {
     public BookDto save(BookDto bookDto) {
         final BookEntity book = mapper.toEntityPostgre(bookDto);
         final BookEntity savedBook = bookRepositoryPostgres.save(book);
+        savedBook.setReserved(false);
         return mapper.toDto(savedBook);
     }
 
@@ -54,10 +60,15 @@ public class BookServicePostgres implements BookService {
 
     @Override
     public void deleteById(String id) {
-        if (!bookRepositoryPostgres.existsById(id)) {
-            throw new ResourceNotFoundException("Book", "id", id);
+        final BookEntity book = bookRepositoryPostgres.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Book", "id", id));
+
+        // Borrando todos sus prestamos
+        final List<LoanEntity> loans = loanRepository.findAllByBookId(book.getId());
+        for (LoanEntity loan : loans) {
+            loanRepository.deleteById(loan.getId());
         }
-        bookRepositoryPostgres.deleteById(id);
+        bookRepositoryPostgres.delete(book);
     }
 
 }

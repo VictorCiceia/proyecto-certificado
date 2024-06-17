@@ -10,6 +10,10 @@ public interface LoanService {
 
     LoanDto findById(String id);
 
+    List<LoanDto> findAllByBook(final String idBook);
+
+    List<LoanDto> findAllByUser(final String idUser);
+
     LoanDto save(LoanDto loanDto);
 
     LoanDto update(LoanDto loanDto, String id);

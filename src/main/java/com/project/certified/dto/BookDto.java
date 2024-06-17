@@ -15,6 +15,8 @@ public class BookDto {
 
     private String title;
 
+    private Boolean reserved;
+
     private String author;
 
 }
