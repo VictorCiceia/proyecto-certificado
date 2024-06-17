@@ -43,8 +43,8 @@ public class BookServicePostgres implements BookService {
     @Override
     public BookDto save(final BookDto bookDto) {
         final BookEntity book = mapper.toEntityPostgre(bookDto);
+        book.setReserved(false);
         final BookEntity savedBook = bookRepositoryPostgres.save(book);
-        savedBook.setReserved(false);
         return mapper.toDto(savedBook);
     }
 

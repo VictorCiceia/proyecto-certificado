@@ -2,7 +2,7 @@ package com.project.certified.config;
 
 public class DataBase {
 
-    static String database = "mongo";
+    static String database = "postgresql";
 
     public static final String MONGO = "mongo";
     public static final String POSTGRESQL = "postgresql";
