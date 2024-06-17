@@ -46,6 +46,6 @@ public class LoanEntity {
 
     @UpdateTimestamp
     @Column(name = "update_at")
-    private LocalDateTime actualizadoEn;
+    private LocalDateTime updatedAt;
 
 }

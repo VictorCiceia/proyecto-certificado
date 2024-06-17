@@ -34,14 +34,14 @@ public class BookServicePostgres implements BookService {
     }
 
     @Override
-    public BookDto findById(String id) {
+    public BookDto findById(final String id) {
         return bookRepositoryPostgres.findById(id)
                 .map(this.mapper::toDto)
                 .orElseThrow(() -> new ResourceNotFoundException("Book", "id", id));
     }
 
     @Override
-    public BookDto save(BookDto bookDto) {
+    public BookDto save(final BookDto bookDto) {
         final BookEntity book = mapper.toEntityPostgre(bookDto);
         final BookEntity savedBook = bookRepositoryPostgres.save(book);
         savedBook.setReserved(false);
@@ -49,7 +49,7 @@ public class BookServicePostgres implements BookService {
     }
 
     @Override
-    public BookDto update(BookDto bookDto, String id) {
+    public BookDto update(final BookDto bookDto, final String id) {
         final BookEntity book = bookRepositoryPostgres.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Book", "id", id));
         book.setAuthor(bookDto.getAuthor());
@@ -59,7 +59,7 @@ public class BookServicePostgres implements BookService {
     }
 
     @Override
-    public void deleteById(String id) {
+    public void deleteById(final String id) {
         final BookEntity book = bookRepositoryPostgres.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Book", "id", id));
 

@@ -23,6 +23,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserEntity implements UserDetails {
+
     @Id
     private String id;
 

@@ -26,7 +26,7 @@ public class AuthServicePostgres {
 
     private final AuthenticationManager authenticationManager;
 
-    public AuthResponseDto login(LoginRequestDto request) {
+    public AuthResponseDto login(final LoginRequestDto request) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
         UserDetails user = userRepository.findByEmail(request.getUsername()).orElseThrow();
         String token = jwtService.getToken(user);
@@ -36,7 +36,7 @@ public class AuthServicePostgres {
 
     }
 
-    public AuthResponseDto register(RegisterRequestDto request) {
+    public AuthResponseDto register(final RegisterRequestDto request) {
         UserEntity user = UserEntity.builder()
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))

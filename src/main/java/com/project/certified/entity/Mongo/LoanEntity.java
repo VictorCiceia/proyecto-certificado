@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LoanEntity {
+
     @Id
     private String id;
 
@@ -26,6 +27,8 @@ public class LoanEntity {
 
     @DBRef
     private UserEntity user;
+
+    private Boolean delivered;
 
     private LocalDate loanDate;
 

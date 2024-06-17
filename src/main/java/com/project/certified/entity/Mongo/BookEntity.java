@@ -17,12 +17,15 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BookEntity {
+
     @Id
     private String id;
 
     private String title;
 
     private String author;
+
+    private Boolean reserved;
 
     private Set<LoanEntity> loans;
 

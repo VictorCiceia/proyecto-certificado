@@ -9,8 +9,8 @@ import java.util.List;
 @Repository
 public interface LoanRepositoryMongo extends MongoRepository<LoanEntity, String> {
 
-    List<LoanEntity> findAllByBook(String id);
+    List<LoanEntity> findAllByBookId(String id);
 
-    List<LoanEntity> findAllByUser(String id);
+    List<LoanEntity> findAllByUserId(String id);
 
 }
